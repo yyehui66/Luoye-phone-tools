@@ -1,2 +1,2 @@
 # adt-cav
-For Android Devices Tools(Console ver)
+For Android Devices Tools
