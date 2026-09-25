@@ -1,6 +1,4 @@
-﻿// ConsoleApplication1.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-
+﻿
 #include <iostream>
 #include <stdlib.h>
 #include <Windows.h>
@@ -12,16 +10,34 @@ int main()
 {
 	while (true) 
 	{
-		cout << "Android Phone Tools" << endl;
+		cout << "落叶手机工具箱" << endl;
 		cout << "请选择操作：" << endl;
-		cout << "1.adb推送指定文件（无需mtp）" << "/n" << "2.adb推送指定文件（无需mtp）" << endl;
+		cout << "1.adb推送指定文件（无需mtp）" << endl << "2.adb拉取指定文件（无需mtp）" << endl;
 		cout << "请输入数字选择：";
 		string changeact;
 		cin >> changeact;
 		int cactnum;
-		cactnum = stoi(changeact);
-		//这里没校验str
-
+		
+		try
+		{
+			cactnum = stoi(changeact);
+		}
+		catch (const invalid_argument&e)
+		{
+			printf("异常错误，程序已退出.");
+			cout << endl;
+			cout << "error code:"<<e.what();
+			return 1;
+		}
+		catch (const out_of_range&e)
+		{
+			printf("异常错误，程序已退出.");
+			cout << endl;
+			cout << "error code:" << e.what();
+			return 2;
+		}
+		
+		
 		if (cactnum == 1)
 		{
 			string adb_push_address_local, adb_push_address_device, adb_push_address_cmdline;
@@ -55,6 +71,8 @@ int main()
 				adb_push_address_cmdline = "adb push " + adb_push_address_local + " " + adb_push_address_device;
 				WinExec(adb_push_address_cmdline.c_str(), SW_HIDE);
 				step_0 = false;
+				Sleep(1500);
+				system("cls");
 			}
 
 		}
