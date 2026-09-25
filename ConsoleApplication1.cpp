@@ -13,41 +13,14 @@ int main()
 	{
 		pdelse = true;
 		cout << "落叶手机工具箱		by leavesyyh" << endl;
-		cout << "Pre-0.1.1" << endl;
+		cout << "Pre-0.1.2" << endl;
 		cout << "请选择操作：" << endl;
-		cout << "0.退出此程序" << endl << "1.adb推送指定文件（无需mtp）" << endl << "2.adb拉取指定文件（无需mtp）" << endl << "3.设备重启" << endl << "4.设备重启Fastboot(Bootloader)" << endl << "5.设备重启至FastbootD(需要Android 10及以上版本)" << endl << "6.设备重启至Recovery" << endl << "7.设备重启至edl(部分旧设备可以)" << endl;
+		cout << "0.退出此程序" << endl << "1.adb推送指定文件（无需mtp）" << endl << "2.adb拉取指定文件（无需mtp）" << endl << "3.设备重启(到...模式)" << endl;
 		cout << "请输入数字选择：";
 		string changeact;
 		cin >> changeact;
-		int cactnum;
 
-		try
-		{
-			cactnum = stoi(changeact);
-		}
-		catch (const invalid_argument)
-		{
-			pdelse = false;
-			cout << "非正常数字字符，请重新输入";
-			Sleep(1500);
-			system("cls");
-		}
-		catch (const out_of_range)
-		{
-			pdelse = false;
-			cout << "数字超出范围，请重新输入";
-			Sleep(1500);
-			system("cls");
-		}
-		catch (...)
-		{
-			printf("异常错误！");
-			cout << endl;
-			cout << "code:-1";
-			return -1;
-		}
-
-		if (cactnum == 1)
+		if (changeact == "1")
 		{
 			pdelse = false;
 			string adb_push_address_local, adb_push_address_device, adb_push_address_cmdline;
@@ -70,7 +43,7 @@ int main()
 
 
 		}
-		if (cactnum == 2)
+		if (changeact == "2")
 		{
 			pdelse = false;
 			string adb_pull_address_local, adb_pull_address_device, adb_pull_address_cmdline;
@@ -86,32 +59,45 @@ int main()
 			system("cls");
 
 		}
-		if (cactnum == 3)
+		if (changeact == "3")
 		{
 			pdelse = false;
-			WinExec("adb reboot", SW_HIDE);
+			string reboot_change;
+			system("cls");
+			cout << "选择如何重启：" << endl;
+			cout << "0.正常重启" << endl;
+			cout << "1.Fastboot(Bootloader)" << endl;
+			cout << "2.FastbootD(Android 10以上)" << endl;
+			cout << "3.Recovery)" << endl;
+			cout << "4.EDL(部分机型)" << endl;
+			cout << "输入其他内容退出" << endl;
+			cin >> reboot_change;
+			if (reboot_change == "0")
+			{
+				WinExec("adb reboot", SW_HIDE);
+			}
+			if (reboot_change == "1")
+			{
+				WinExec("adb reboot bootloader", SW_HIDE);
+			}
+			if (reboot_change == "2")
+			{
+				WinExec("adb reboot fastboot", SW_HIDE);
+			}
+			if (reboot_change == "3")
+			{
+				WinExec("adb reboot recovery", SW_HIDE);
+			}
+			if (reboot_change == "4")
+			{
+				WinExec("adb reboot edl", SW_HIDE);
+			}
+			else
+			{
+				system("cls");
+			}
 		}
-		if (cactnum == 4)
-		{
-			pdelse = false;
-			WinExec("adb reboot bootloader", SW_HIDE);
-		}
-		if (cactnum == 5)
-		{
-			pdelse = false;
-			WinExec("adb reboot fastboot", SW_HIDE);
-		}
-		if (cactnum == 6)
-		{
-			pdelse = false;
-			WinExec("adb reboot recovery", SW_HIDE);
-		}
-		if (cactnum == 7)
-		{
-			pdelse = false;
-			WinExec("adb reboot edl", SW_HIDE);
-		}
-		if (cactnum == 0)
+		if (changeact == "0")
 		{
 			pdelse = false;
 			cout << "此程序将在3s后退出...";
