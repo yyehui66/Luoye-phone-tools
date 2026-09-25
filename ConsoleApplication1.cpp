@@ -1,4 +1,4 @@
-﻿
+
 #include <iostream>
 #include <stdlib.h>
 #include <Windows.h>
@@ -8,38 +8,45 @@ using namespace std;
 
 int main()
 {
-	while (true) 
+	bool pdelse=true;
+	
+	while (true)
 	{
 		cout << "落叶手机工具箱" << endl;
 		cout << "请选择操作：" << endl;
-		cout << "1.adb推送指定文件（无需mtp）" << endl << "2.adb拉取指定文件（无需mtp）" << endl;
+		cout << "0.退出此程序" << endl << "1.adb推送指定文件（无需mtp）" << endl << "2.adb拉取指定文件（无需mtp）" << endl << "3.设备重启" << endl << "4.设备重启Fastboot(Bootloader)" << endl << "5.设备重启至FastbootD(需要Android 10及以上版本)" << endl << "6.设备重启至Recovery" << endl << "7.设备重启至edl(部分旧设备可以)" << endl;
 		cout << "请输入数字选择：";
 		string changeact;
 		cin >> changeact;
 		int cactnum;
-		
+
 		try
 		{
 			cactnum = stoi(changeact);
 		}
-		catch (const invalid_argument&e)
+		catch (const invalid_argument)
 		{
-			printf("异常错误，程序已退出.");
-			cout << endl;
-			cout << "error code:"<<e.what();
-			return 1;
+			cout << "非正常数字字符，请重新输入";
+			Sleep(1500);
+			system("cls");
 		}
-		catch (const out_of_range&e)
+		catch (const out_of_range)
 		{
-			printf("异常错误，程序已退出.");
-			cout << endl;
-			cout << "error code:" << e.what();
-			return 2;
+			cout << "数字超出范围，请重新输入";
+			Sleep(1500);
+			system("cls");
 		}
-		
-		
+		catch (...)
+		{
+			printf("异常错误！");
+			cout << endl;
+			cout << "code:-1";
+			return -1;
+		}
+
 		if (cactnum == 1)
 		{
+			pdelse = false;
 			string adb_push_address_local, adb_push_address_device, adb_push_address_cmdline;
 			//adb推送文件变量
 			bool step_0, step_1;
@@ -78,6 +85,7 @@ int main()
 		}
 		if (cactnum == 2)
 		{
+			pdelse = false;
 			string adb_pull_address_local, adb_pull_address_device, adb_pull_address_cmdline;
 			//adb拉取文件变量
 			bool step_0, step_1, step_2;
@@ -122,9 +130,44 @@ int main()
 				system("cls");
 			}
 		}
-		else
+		if (cactnum == 3)
 		{
+			pdelse = false;
+			WinExec("adb reboot", SW_HIDE);
+		}
+		if (cactnum == 4)
+		{
+			pdelse = false;
+			WinExec("adb reboot bootloader", SW_HIDE);
+		}
+		if (cactnum == 5)
+		{
+			pdelse = false;
+			WinExec("adb reboot fastboot", SW_HIDE);
+		}
+		if (cactnum == 6)
+		{
+			pdelse = false;
+			WinExec("adb reboot recovery", SW_HIDE);
+		}
+		if (cactnum == 7)
+		{
+			pdelse = false;
+			WinExec("adb reboot edl", SW_HIDE);
+		}
+		if (cactnum == 0)
+		{
+			pdelse = false;
+			cout << "此程序将在3s后退出...";
+			Sleep(3000);
+			return 0;
+		}
+		if(pdelse)
+		{
+			cout << "不是已有的功能，请重新输入";
+			Sleep(1500);
 			system("cls");
 		}
+		
 	}
 }
